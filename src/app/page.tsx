@@ -22,10 +22,10 @@ export default function Home() {
                 <SelectValue placeholder="Genre" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="apple">Apple</SelectItem>
-                <SelectItem value="banana">Banana</SelectItem>
-                <SelectItem value="blueberry">Blueberry</SelectItem>
-                <SelectItem value="grapes">Grapes</SelectItem>
+                <SelectItem value="apple">Horror</SelectItem>
+                <SelectItem value="banana">Comedy</SelectItem>
+                <SelectItem value="blueberry">Drama</SelectItem>
+                <SelectItem value="grapes">Action</SelectItem>
                 <SelectItem value="pineapple">Pineapple</SelectItem>
               </SelectContent>
             </Select>
