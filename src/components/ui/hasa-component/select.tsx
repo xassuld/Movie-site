@@ -1,149 +1,96 @@
-import { Button } from "@/components/ui/button";
+"use client";
+import {
+  Moon,
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
+  Search,
+} from "lucide-react";
+import Link from "next/link";
+import { Button } from "../button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
+  DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
-import { ChevronRight } from "lucide-react";
-import { ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
 
-export default function GenreSelector() {
+const url = "https://api.themoviedb.org/3/genre/movie/list?language=en";
+const token =
+  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNjdkOGJlYmQwZjRmZjM0NWY2NTA1Yzk5ZTlkMDI4OSIsIm5iZiI6MTc0MjE3NTA4OS4zODksInN1YiI6IjY3ZDc3YjcxODVkMTM5MjFiNTAxNDE1ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KxFMnZppBdHUSz_zB4p9A_gRD16I_R6OX1oiEe0LbE8";
+const Navigation = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchGenreData();
+  }, []);
+
+  const fetchGenreData = () => {
+    fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+      .then((response) => response.json())
+      .then((data) => setData(data.genres));
+  };
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button className="bg-white text-black hover:bg-white border-[#E4E4E7] border">
-          <ChevronDown />
-          Genre
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-5">
-        <DropdownMenuLabel className="w-[577px] flex flex-col">
-          <div className="flex flex-col gap-1">
-            <p className="text-2xl font-semibold">Genres</p>
-            <p className="text-[16px]">See lists of movies by genre</p>
+    <div className="h-[59px] w-screen flex justify-center">
+      <div className="w-[1440px] flex justify-between items-center">
+        <Link href={"/"}>
+          <div className="flex gap-2 items-center">
+            <img src="film.svg" alt="logo" className=" w-5 h-5 " />
+            <p className=" text-[16px] text-indigo-700 font-bold italic">
+              Movie Z
+            </p>
           </div>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator className="my-4" />
-        <DropdownMenuGroup className="w-[577px] flex gap-4 flex-wrap">
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Action
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Adventure
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Animation
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Biography
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Comedy
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Crime
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Documentary
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Drama
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Family
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Fantasy
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Film-Noir
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Game-Show
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            History
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Horror
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Music
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Musical
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Mystery
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            News
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Reality-Show
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Romance
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Sci-Fi
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Short
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Sport
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Talk-Show
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Thriller
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            War
-            <ChevronRight />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit">
-            Western
-            <ChevronRight />
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </Link>
+        <div className="flex gap-3">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button className="bg-white text-black hover:bg-white border-[#E4E4E7] border">
+                <ChevronDown />
+                Genre
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="p-5 w-[577px]">
+              <DropdownMenuLabel className=" gap-1 flex flex-col">
+                <p className="text-2xl font-semibold">Genres</p>
+                <p className="text-[16px]">See lists of movies by genre</p>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator className="my-4" />
+              <DropdownMenuGroup className="flex gap-4 flex-wrap w-full">
+                {data?.map(({ id, name }) => {
+                  return (
+                    <DropdownMenuItem
+                      className="bg-white text-black hover:bg-amber-50 border border-[#E4E4E7] w-fit"
+                      key={id}
+                    >
+                      <ChevronRight />
+                      {name}
+                    </DropdownMenuItem>
+                  );
+                })}
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <div className="flex items-center gap-2.5 border px-3 rounded-md border-[#E4E4E7]">
+            <Search color="gray" />
+            <input
+              type="text"
+              placeholder="Search...."
+              className=" focus:outline-0"
+            />
+          </div>
+        </div>
+        <button className="border cursor-pointer border-[#E4E4E7] h-9 w-9 rounded-md flex justify-center items-center">
+          <Moon size={20} strokeWidth={2} />
+        </button>
+      </div>
+    </div>
   );
-}
+};
+
+export default Navigation;

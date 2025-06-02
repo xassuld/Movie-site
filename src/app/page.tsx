@@ -3,21 +3,43 @@ import { Input } from "@/components/ui/input";
 import Footer from "@/components/ui/hasa-component/Footer";
 import Slide from "@/components/ui/hasa-component/carousel";
 import GenreSelector from "@/components/ui/hasa-component/select";
+import Navigation from "@/components/ui/hasa-component/select";
+import { useEffect, useState } from "react";
+import MovieCard from "@/components/ui/hasa-component/Movie-card";
+
+const token =
+  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNjdkOGJlYmQwZjRmZjM0NWY2NTA1Yzk5ZTlkMDI4OSIsIm5iZiI6MTc0MjE3NTA4OS4zODksInN1YiI6IjY3ZDc3YjcxODVkMTM5MjFiNTAxNDE1ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KxFMnZppBdHUSz_zB4p9A_gRD16I_R6OX1oiEe0LbE8";
+
+type Movie = {
+  id: number;
+  title: string;
+  vote_average: number;
+  overview: string;
+  poster_path: string;
+};
+
+type MovieResponse = {
+  results: Movie[];
+};
 
 export default function Home() {
+  const [movies, setMovies] = useState<MovieResponse>({ results: [] });
+  const baseUrl = "https://api.themoviedb.org/3/movie";
+
+  useEffect(() => {
+    fetch(`${baseUrl}/popular?language=en-US&page=1`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setMovies(data);
+      });
+  }, []);
+
   return (
     <div className="w-screen h-screen">
       {/* NAVIGATION */}
-      <div className="h-[56px] px-4 flex justify-center items-center">
-        <div className="w-[1280px] flex items-center justify-between">
-          <img src="Logo.png" className="w-[92px] h-[20px]" />
-          <div className="flex gap-3">
-            <GenreSelector />
-            <Input placeholder="Search..." className="w-[379px]" />
-          </div>
-          <img src="Modes.png" className="w-9 h-9" />
-        </div>
-      </div>
+      <Navigation />
       {/* CAROUSEL RECOMMENDATION */}
       <Slide />
       {/* MOVIE PART */}
@@ -29,6 +51,25 @@ export default function Home() {
             See more
             <img src="arrow-right.png" className="w-[16px] h-[16px]" />
           </button>
+        </div>
+
+        {/* MOVIES */}
+        <div className="max-w-[1400px] m-auto py-5 flex flex-col gap-11">
+          <section>
+            <div className="grid grid-cols-5 gap-5">
+              {movies?.results?.map((movie) => {
+                return (
+                  <MovieCard
+                    key={movie.id}
+                    title={movie.title}
+                    rate={movie.vote_average}
+                    description={movie.overview}
+                    image={movie.poster_path}
+                  />
+                );
+              })}
+            </div>
+          </section>
         </div>
       </div>
 
