@@ -2,7 +2,6 @@
 import { Input } from "@/components/ui/input";
 import Footer from "@/components/ui/hasa-component/Footer";
 import Slide from "@/components/ui/hasa-component/carousel";
-import GenreSelector from "@/components/ui/hasa-component/select";
 import Navigation from "@/components/ui/hasa-component/select";
 import { useEffect, useState } from "react";
 import MovieCard from "@/components/ui/hasa-component/Movie-card";

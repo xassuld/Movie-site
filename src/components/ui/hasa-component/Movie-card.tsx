@@ -9,7 +9,7 @@ const MovieCard = ({ title, rate, description, image }: MovieCardProps) => {
   const imageUrl = "https://image.tmdb.org/t/p/w500";
 
   return (
-    <div className="flex flex-col p-2">
+    <div className="flex flex-col p-2 hover:cursor-pointer">
       <img
         src={`${imageUrl}${image}`}
         alt="poster"
